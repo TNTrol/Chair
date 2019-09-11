@@ -1,17 +1,18 @@
 #define HIM 10
+#define SIZE 8
 int timeCount = 0, temp = 0, pin = -1, code = 0;
 
 void setup() {
-    for(int i = 0; i < 12; i++)
+    for(int i = 0; i < SIZE; i++)
     pinMode(i,OUTPUT);
 }
 
 void set(int a){
-    if(a > 0)
+    if(a < 0)
         return;
-    for(int i = 0; i < 13; i++)
+    for(int i = 0; i < SIZE; i++)
         digitalWrite(i, LOW);
-    digitalWrite(a % 13, HIGH);
+    digitalWrite(a % SIZE, HIGH);
 } 
 
 void loop() {
@@ -19,8 +20,7 @@ void loop() {
     timeCount = 2 * code;
     analogWrite(HIM, code / 4);
     if(temp >= timeCount){
-        pin += (pin + 1 ) % HIM == 0 ? 2 : 1;
-        set(pin);
+        set(++pin);
         temp = 0;
     }
     temp++;
